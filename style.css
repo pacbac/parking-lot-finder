@@ -26,25 +26,26 @@ h1#header {
   color: white;
 }
 
-input[name="dest-search"] {
+#pac-input {
   width: 65%;
   height: 40px;
-  background-color: #dbf0ff;
+  background-color: white;
   display: inline-block;
   outline: none;
-  border: 0;
+  border-style: solid;
+  border-width: 3px;
   border-radius: 10px;
   display: block;
   margin: auto;
-  padding: 5px 10px;
   font-family: Lato;
   font-size: 16px;
   margin-bottom: 20px;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
 }
 
-iframe {
-  display: block;
-  margin: auto;
+#pac-input:focus {
+  border-color: #4d90fe;
 }
 
 .option-boxes {
