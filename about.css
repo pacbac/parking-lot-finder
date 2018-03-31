@@ -1,7 +1,7 @@
 .polaroid {
   position: relative;
   padding-top: 20px;
-  padding-left: 75px;
+  padding-left: 65px;
   width: 250px;
   height: 300px;
 
@@ -22,7 +22,7 @@
   bottom: 10px;
   font: 400 22px/1 'Kaushan Script', cursive;
   color: black;
-  padding-left: 100px;
+  padding-left: 90px;
   color: teal;
 }
 
@@ -31,9 +31,9 @@
   bottom: 10px;
   font: 400 22px/1 'Kaushan Script', cursive;
   color: black;
-  padding-left: 100px;
-  margin-left: 100%;
+  padding-left: 430px;
   color: teal;
+
 }
 
 #e {
@@ -41,7 +41,7 @@
   bottom: 10px;
   font: 400 22px/1 'Kaushan Script', cursive;
   color: black;
-  padding-left: 790px;
+  padding-left: 770px;
   color: teal;
 }
 
@@ -50,7 +50,7 @@
   bottom: 10px;
   font: 400 22px/1 'Kaushan Script', cursive;
   color: black;
-  padding-left: 1150px;
+  padding-left: 1105px;
   color: teal;
 }
 body{
@@ -60,17 +60,30 @@ body{
 }
 
 .divider{
-  padding-top: 8%;
+  padding-top: 6%;
 }
 .poltextcont{
   position: relative;
   color: black;
-  background-color: white;
+  background-color: rgba(30, 30, 30, 0.75);
+  border-color: var(--bg-color);
+  border-style: solid;
+  color: white;
   width: 700px;
   margin: auto;
+  padding: 10px 10px 10px 10px;
 }
 
 .description{
-  font: 400 22px/1 'Kaushan Script', cursive;
+  font: 400 22px/1 'Kaushan Script';
+  color: white;
+  text-shadow:
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+}
 
+.row{
+  margin: auto;
 }
