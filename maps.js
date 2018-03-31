@@ -12,6 +12,23 @@ var ucla;
 var infoWindow;
 var map;
 
+function calcRoute(start, end) {
+  var selectedMode = "DRIVING";
+  var request = {
+      origin: start,
+      destination: end,
+      // Note that Javascript allows us to access the constant
+      // using square brackets and a string value as its
+      // "property."
+      travelMode: google.maps.TravelMode[selectedMode]
+  };
+  directionsService.route(request, function(response, status) {
+    if (status == 'OK') {
+      directionsDisplay.setDirections(response);
+    }
+  });
+}
+
 function initAutocomplete(currentloc) {
   directionsService = new google.maps.DirectionsService();
   directionsDisplay = new google.maps.DirectionsRenderer();
@@ -83,6 +100,13 @@ function initAutocomplete(currentloc) {
       }
     });
     map.fitBounds(bounds);
+	
+	var endlat = places[0].geometry.location.lat();
+	var endlng = places[0].geometry.location.lng();
+	var endloc = new google.maps.LatLng(endlat, endlng);
+	calcRoute(currentloc, endloc);
+	
+	
   });
 }
 
@@ -110,22 +134,4 @@ function locate(){
 	//alert(currentLatitude);
 	//return [currentLatitude, currentLongitude];
 }
-
-function calcRoute() {
-  var selectedMode = "DRIVING";
-  var request = {
-      origin: ucla,
-      destination: usc,
-      // Note that Javascript allows us to access the constant
-      // using square brackets and a string value as its
-      // "property."
-      travelMode: google.maps.TravelMode[selectedMode]
-  };
-  directionsService.route(request, function(response, status) {
-    if (status == 'OK') {
-      directionsDisplay.setDirections(response);
-    }
-  });
-}
-
 
