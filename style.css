@@ -46,3 +46,17 @@ iframe {
   display: block;
   margin: auto;
 }
+
+.option-boxes {
+  width: 200px;
+  height: 50px;  
+}
+
+.options {
+  display: inline-block;
+}
+
+.alloptions {
+  width: 100%;
+  text-align: center;
+}
