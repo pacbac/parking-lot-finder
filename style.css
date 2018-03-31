@@ -1,8 +1,8 @@
-
-body{
-
+body {
+  background: linear-gradient(rgba(255,255,255,0.15), rgba(255,255,255,0.15)), url(light.jpg);
+  opacity: 75%;
+  --bg-color: rgba(255, 255, 255, 0.5);
 }
-
 
 .center-content {
   width: 85%;
@@ -15,51 +15,184 @@ body{
 h1#header {
   width: 20em;
   font-family: Montserrat;
+  font-weight: 300;
   text-align: center;
   margin: auto;
   border-bottom-style: solid;
-  border-bottom-width: 3px;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
+  border-bottom-width: 1.5px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
   padding-bottom: 15px;
   margin-bottom: 20px;
   color: white;
 }
 
-#pac-input {
-  width: 65%;
-  height: 40px;
-  background-color: white;
-  display: inline-block;
+#pac-input, .pac-container {
+  font-family: Lato;
+  font-size: 16px;
+  color: white;
   outline: none;
   border-style: solid;
   border-width: 3px;
-  border-radius: 10px;
+  border-radius: 3px;
+  border-color: white;
+}
+
+#pac-input {
+  width: 65%;
+  height: 40px;
+  background-color: var(--bg-color);
+  opacity: 0.75;
   display: block;
   margin: auto;
-  font-family: Lato;
-  font-size: 16px;
   margin-bottom: 20px;
   padding: 0 11px 0 13px;
   text-overflow: ellipsis;
 }
 
 #pac-input:focus {
-  border-color: #4d90fe;
+  border-color: #d3d3d3;
+}
+
+#pac-input::placeholder {
+  color: white;
+}
+
+.pac-container {
+  background-color: rgba(255, 255, 255, 0.85);
+}
+
+.pac-item, .pac-item:nth-child(n), .pac-item span {
+  border-radius: 0;
+  border-width: 1px;
+  color: gray;
+  cursor: pointer;
+}
+
+/* Always set the map height explicitly to define the size of the div
+ * element that contains the map. */
+#map {
+  width: 50%;
+  height: 25vw;
+  margin: auto;
+  border-style: solid;
+  border-width: 7px;
+  border-color: var(--bg-color);
+  border-radius: 2px;
+  filter: brightness(95%);
+}
+
+#description {
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+#infowindow-content .title {
+  font-weight: bold;
+}
+
+#infowindow-content {
+  display: none;
+}
+
+#map #infowindow-content {
+  display: inline;
+}
+
+.pac-card {
+  margin: 10px 10px 0 0;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  background-color: #fff;
+  font-family: Roboto;
+}
+
+#pac-container {
+  padding-bottom: 12px;
+  margin-right: 12px;
+}
+
+.pac-controls {
+  display: inline-block;
+  padding: 5px 11px;
+}
+
+.pac-controls label {
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 300;
+}
+
+#title {
+  color: #fff;
+  background-color: #4d90fe;
+  font-size: 25px;
+  font-weight: 500;
+  padding: 6px 12px;
+}
+#target {
+  width: 345px;
 }
 
 .option-boxes {
+<<<<<<< HEAD
   width: 200px;
   height: 50px;  
   font-family: Montserrat;
   font-size: 16px;
+=======
+  min-width: 200px;
+  min-height: 75px;
+  margin-left: 5px;
+  background-color: white;
+  border-radius: 3px;
+  border-width: 0;
+>>>>>>> 5805ea9b2a195dede3a157d605f3b5fdd930afb2
 }
 
 .options {
-  display: inline-block;
+  outline: none;
+  width: 200px;
+  height: 120px;
+  line-height: 120px;
+  vertical-align: middle;
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.options button {
+  cursor: pointer;
+}
+
+.options button:hover {
+  background-color: #f2dd9f;
+}
+
+.options button p {
+  font-family: Lato;
+  font-weight: bold;
 }
 
 .alloptions {
-  width: 100%;
+  display: none;
+  max-width: 50%;
+  margin: auto;
   text-align: center;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.25);
+  border-color: var(--bg-color);
+  border-style: solid;
+  border-width: 3px;
+  border-radius: 2px;
+  color: white;
+  font-family: Lato;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
