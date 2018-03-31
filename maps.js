@@ -6,13 +6,26 @@
 // parameter when you first load the API. For example:
 // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
-function initAutocomplete() {
-  var map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: -33.8688, lng: 151.2195},
-    zoom: 10,
-    mapTypeId: 'roadmap'
-  });
+var directionsService;
+var directionsDisplay;
+var ucla;
+var infoWindow;
+var map;
 
+function initAutocomplete(currentloc) {
+  directionsService = new google.maps.DirectionsService();
+  directionsDisplay = new google.maps.DirectionsRenderer();
+  //ucla = new google.maps.LatLng(34.0689, -118.4452);
+  //var currentcoord = locate();
+  //alert(currentcoord[0]);
+  var mapOptions = {
+    zoom: 14,
+    center: currentloc
+  }
+  //alert(currentcoord[0]);
+
+  map = new google.maps.Map(document.getElementById('map'), mapOptions);
+  directionsDisplay.setMap(map);
   // Create the search box and link it to the UI element.
   var input = document.getElementById('pac-input');
   var searchBox = new google.maps.places.SearchBox(input);
@@ -73,6 +86,31 @@ function initAutocomplete() {
   });
 }
 
+// Try HTML5 geolocation.
+function locate(){
+	if ("geolocation" in navigator){
+		var currentLatitude;
+		var currentLongitude;
+		var currentLocation
+		navigator.geolocation.getCurrentPosition(function(position){ 
+			currentLatitude = position.coords.latitude;
+			currentLongitude = position.coords.longitude;
+
+			//var infoWindowHTML = "Latitude: " + currentLatitude + "<br>Longitude: " + currentLongitude;
+			//infoWindow = new google.maps.InfoWindow({map: map, content: infoWindowHTML});
+			currentLocation = { lat: currentLatitude, lng: currentLongitude };
+			initAutocomplete(currentLocation);
+
+			//alert(currentcoord[0]);
+			//alert(currentLatitude);
+			//infoWindow.setPosition(currentLocation);
+		});
+
+	}
+	//alert(currentLatitude);
+	//return [currentLatitude, currentLongitude];
+}
+
 function calcRoute() {
   var selectedMode = "DRIVING";
   var request = {
@@ -91,17 +129,3 @@ function calcRoute() {
 }
 
 
-// Try HTML5 geolocation.
-function locate(){
-	if ("geolocation" in navigator){
-		navigator.geolocation.getCurrentPosition(function(position){ 
-			var currentLatitude = position.coords.latitude;
-			var currentLongitude = position.coords.longitude;
-
-			var infoWindowHTML = "Latitude: " + currentLatitude + "<br>Longitude: " + currentLongitude;
-			infoWindow = new google.maps.InfoWindow({map: map, content: infoWindowHTML});
-			var currentLocation = { lat: currentLatitude, lng: currentLongitude };
-			infoWindow.setPosition(currentLocation);
-		});
-	}
-}
