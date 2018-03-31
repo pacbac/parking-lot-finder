@@ -66,6 +66,7 @@ h1#header {
   border-radius: 0;
   border-width: 1px;
   color: gray;
+  cursor: pointer;
 }
 
 /* Always set the map height explicitly to define the size of the div
@@ -138,15 +139,53 @@ h1#header {
 }
 
 .option-boxes {
-  width: 200px;
-  height: 50px;
+  min-width: 200px;
+  min-height: 75px;
+  margin-left: 5px;
+  background-color: white;
+  border-radius: 3px;
+  border-width: 0;
 }
 
 .options {
-  display: inline-block;
+  outline: none;
+  width: 200px;
+  height: 120px;
+  line-height: 120px;
+  vertical-align: middle;
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.options button {
+  cursor: pointer;
+}
+
+.options button:hover {
+  background-color: #f2dd9f;
+}
+
+.options button p {
+  font-family: Lato;
+  font-weight: bold;
 }
 
 .alloptions {
-  width: 100%;
+  display: none;
+  max-width: 50%;
+  margin: auto;
   text-align: center;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.25);
+  border-color: var(--bg-color);
+  border-style: solid;
+  border-width: 3px;
+  border-radius: 2px;
+  color: white;
+  font-family: Lato;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }

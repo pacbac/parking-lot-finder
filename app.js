@@ -1,5 +1,5 @@
-let markers = []
-const key = 'AIzaSyAhQfMo_WF9YjXqjv8OJhjDRGsNtS2ADMU'
+if(!markers) var markers = []
+if (!key) var key = 'AIzaSyAhQfMo_WF9YjXqjv8OJhjDRGsNtS2ADMU'
 
 $(document).ready(function(){
   $("#pac-input").keypress(e => {
@@ -8,18 +8,53 @@ $(document).ready(function(){
     retrieveJSONData()
   })
 
-  $(document).on("click", ".pac-item", () => retrieveJSONData())
+  $(document).on("mousedown", ".pac-item", () => retrieveJSONData())
 })
 
 function retrieveJSONData() {
+  $(".alloptions").show()
   $.getJSON(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent($("#pac-input").val())}&key=${key}`,
   json => {
     if(json.status === "OK"){
       let lat = json.results[0].geometry.location.lat
       let long = json.results[0].geometry.location.lng
-      alert(`${lat} ${long}`)
-      $.getJSON(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${long}&radius=500&type=parking&key=${key}`, jsonData => {
-        alert(JSON.stringify(jsonData, undefined, 2))
+      $.ajax({
+        url: `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${long}&radius=500&type=parking&key=${key}`,
+        dataType: 'JSON',
+        type: 'GET',
+        success: function (data) {
+            if(data.status === "OK"){
+              alert(JSON.stringify(data, undefined, 2))
+              $(".alloptions").html("")
+              console.log(data)
+              data.results.forEach(elem => {
+                if(elem.rating){
+                  let color;
+                  if(elem.rating >= 4)
+                    color = 'green'
+                  else if(elem.rating < 3)
+                    color = 'red'
+                  else
+                    color = 'black'
+                  $(".alloptions").append(`<div class="options">
+                    <button class="option-boxes">
+                      <p class="name">${elem.name}</p>
+                      <p class="rating" style="color: ${color}">${elem.rating}/5</p>
+                    </button>
+                  </div>`)
+                } else if(elem.name) {
+                  $(".alloptions").append(`<div class="options">
+                    <button class="option-boxes">
+                      <p class="name">${elem.name}</p>
+                    </button>
+                  </div>`)
+                }
+              })
+            } else if(data.status === "ZERO_RESULTS"){
+              $(".alloptions").text("No available parking lots at this time.")
+            }
+        },
+        error: e => alert(`Error, ${e}`)
       })
     } else {
       alert(`Error, ${json.status}`)
