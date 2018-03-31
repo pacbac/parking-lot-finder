@@ -139,12 +139,14 @@ h1#header {
 }
 
 .option-boxes {
+
   min-width: 200px;
   min-height: 75px;
   margin-left: 5px;
   background-color: white;
   border-radius: 3px;
   border-width: 0;
+
 }
 
 .options {
