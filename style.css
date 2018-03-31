@@ -1,16 +1,15 @@
-body {
-  --lightGray: #f0f0f0;
-  background-color: var(--lightGray);
-  padding: 0;
-  margin: 0;
+
+body{
+
 }
+
 
 .center-content {
   width: 85%;
   padding: 10px;
   margin: auto;
   position: relative;
-  background-color: white;
+  background-color: #0000;
 }
 
 h1#header {
@@ -24,6 +23,7 @@ h1#header {
   border-bottom-right-radius: 5px;
   padding-bottom: 15px;
   margin-bottom: 20px;
+  color: white;
 }
 
 input[name="dest-search"] {
