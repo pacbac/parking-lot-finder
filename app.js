@@ -1,5 +1,6 @@
 if(!markers) var markers = []
 if (!key) var key = 'AIzaSyAhQfMo_WF9YjXqjv8OJhjDRGsNtS2ADMU'
+if(!i) var numOptions = 0
 
 $(document).ready(function(){
   $("#pac-input").keypress(e => {
@@ -12,54 +13,62 @@ $(document).ready(function(){
 })
 
 function retrieveJSONData() {
-  $(".alloptions").show()
-  $.getJSON(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent($("#pac-input").val())}&key=${key}`,
-  json => {
-    if(json.status === "OK"){
-      let lat = json.results[0].geometry.location.lat
-      let long = json.results[0].geometry.location.lng
-      $.ajax({
-        url: `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${long}&radius=500&type=parking&key=${key}`,
-        dataType: 'JSON',
-        type: 'GET',
-        success: function (data) {
-            if(data.status === "OK"){
-              alert(JSON.stringify(data, undefined, 2))
-              $(".alloptions").html("")
-              console.log(data)
-              data.results.forEach(elem => {
-                if(elem.rating){
-                  let color;
-                  if(elem.rating >= 4)
-                    color = 'green'
-                  else if(elem.rating < 3)
-                    color = 'red'
-                  else
-                    color = 'black'
-                  $(".alloptions").append(`<div class="options">
-                    <button class="option-boxes">
-                      <p class="name">${elem.name}</p>
-                      <p class="rating" style="color: ${color}">${elem.rating}/5</p>
-                    </button>
-                  </div>`)
-                } else if(elem.name) {
-                  $(".alloptions").append(`<div class="options">
-                    <button class="option-boxes">
-                      <p class="name">${elem.name}</p>
-                    </button>
-                  </div>`)
-                }
-              })
-            } else if(data.status === "ZERO_RESULTS"){
-              $(".alloptions").text("No available parking lots at this time.")
-            }
-        },
-        error: e => alert(`Error, ${e}`)
-      })
-    } else {
-      alert(`Error, ${json.status}`)
-    }
+  $(".alloptions").css('display', 'flex')
+  $.ajax({
+    url: `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent($("#pac-input").val())}&key=${key}`,
+    dataType: 'JSON',
+    type: 'GET',
+    success: data => getParking(data),
+    error: e => $(".alloptions").text(`Cannot connect to Google servers, ${e.statusText} status: ${e.status}`)
   })
+}
+
+function getParking(json) {
+  //console.log(JSON.stringify(json))
+  if(json.status === "OK"){
+    let lat = json.results[0].geometry.location.lat
+    let long = json.results[0].geometry.location.lng
+    $.ajax({
+      url: `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${long}&radius=500&type=parking&key=${key}`,
+      dataType: 'JSON',
+      type: 'GET',
+      success: data => appendData(data),
+      error: e => $(".alloptions").text("Cannot connect to Google servers.")
+    })
+  }
+}
+
+function appendData(data) {
+  if(data.status === "OK"){
+    //alert(JSON.stringify(data, undefined, 2))
+    $(".alloptions").html("")
+    console.log(data)
+    data.results.forEach(elem => {
+      if(elem.rating){
+        let color;
+        if(elem.rating >= 4)
+          color = 'green'
+        else if(elem.rating < 3)
+          color = 'red'
+        else
+          color = 'black'
+        $(".alloptions").append(`<div class="options">
+          <button class="option-boxes">
+            <p class="name">${elem.name}</p>
+            <p class="rating" style="color: ${color}">${elem.rating}/5</p>
+          </button>
+        </div>`)
+      } else if(elem.name) {
+        $(".alloptions").append(`<div class="options">
+          <button class="option-boxes">
+            <p class="name">${elem.name}</p>
+          </button>
+        </div>`)
+      }
+    })
+  } else if(data.status === "ZERO_RESULTS"){
+    $(".alloptions").text("No available parking lots at this time.")
+  }
 }
 
 // This example adds a search box to a map, using the Google Place Autocomplete
