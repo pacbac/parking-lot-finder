@@ -1,0 +1,76 @@
+.polaroid {
+  position: relative;
+  padding-top: 20px;
+  padding-left: 75px;
+  width: 250px;
+  height: 300px;
+
+}
+
+.polaroid img {
+  border: 10px solid #fff;
+
+  -webkit-box-shadow: 3px 3px 3px #777;
+     -moz-box-shadow: 3px 3px 3px #777;
+          box-shadow: 3px 3px 3px #777;
+  height: 300px;
+  width: 250px;
+}
+
+#c {
+  position: absolute;
+  bottom: 10px;
+  font: 400 22px/1 'Kaushan Script', cursive;
+  color: black;
+  padding-left: 100px;
+  color: teal;
+}
+
+#p {
+  position: absolute;
+  bottom: 10px;
+  font: 400 22px/1 'Kaushan Script', cursive;
+  color: black;
+  padding-left: 100px;
+  margin-left: 100%;
+  color: teal;
+}
+
+#e {
+  position: absolute;
+  bottom: 10px;
+  font: 400 22px/1 'Kaushan Script', cursive;
+  color: black;
+  padding-left: 790px;
+  color: teal;
+}
+
+#r {
+  position: absolute;
+  bottom: 10px;
+  font: 400 22px/1 'Kaushan Script', cursive;
+  color: black;
+  padding-left: 1150px;
+  color: teal;
+}
+body{
+  background-image: url(light.jpg);
+  background-size: 1500px 1000px;
+
+}
+
+.divider{
+  padding-top: 8%;
+}
+.poltextcont{
+  position: relative;
+  color: black;
+  background-color: white;
+  width: 700px;
+  margin: auto;
+}
+
+.description{
+  font: 400 22px/1 'Kaushan Script', cursive;
+
+}
