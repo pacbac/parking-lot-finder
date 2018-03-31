@@ -139,14 +139,12 @@ h1#header {
 }
 
 .option-boxes {
-
   min-width: 200px;
   min-height: 75px;
   margin-left: 5px;
   background-color: white;
   border-radius: 3px;
   border-width: 0;
-
 }
 
 .options {
@@ -191,3 +189,14 @@ h1#header {
   justify-content: center;
   align-items: center;
 }
+
+.button {
+  font-family: Montserrat;
+  color: white;
+  background-color: rgba(255, 255, 255, 0.25);
+  border-color: var(--bg-color);
+  border-style: solid;
+  display: flex;
+  flex-wrap: wrap;
+}
+
