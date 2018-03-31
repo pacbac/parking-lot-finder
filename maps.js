@@ -72,3 +72,36 @@ function initAutocomplete() {
     map.fitBounds(bounds);
   });
 }
+
+function calcRoute() {
+  var selectedMode = "DRIVING";
+  var request = {
+      origin: ucla,
+      destination: usc,
+      // Note that Javascript allows us to access the constant
+      // using square brackets and a string value as its
+      // "property."
+      travelMode: google.maps.TravelMode[selectedMode]
+  };
+  directionsService.route(request, function(response, status) {
+    if (status == 'OK') {
+      directionsDisplay.setDirections(response);
+    }
+  });
+}
+
+
+// Try HTML5 geolocation.
+function locate(){
+	if ("geolocation" in navigator){
+		navigator.geolocation.getCurrentPosition(function(position){ 
+			var currentLatitude = position.coords.latitude;
+			var currentLongitude = position.coords.longitude;
+
+			var infoWindowHTML = "Latitude: " + currentLatitude + "<br>Longitude: " + currentLongitude;
+			infoWindow = new google.maps.InfoWindow({map: map, content: infoWindowHTML});
+			var currentLocation = { lat: currentLatitude, lng: currentLongitude };
+			infoWindow.setPosition(currentLocation);
+		});
+	}
+}
