@@ -196,3 +196,13 @@ h1#header {
   justify-content: center;
   align-items: center;
 }
+<<<<<<< HEAD
+=======
+
+#name {
+  font-style: oblique;
+  font-weight: 200%;
+  font-size: 20px;
+  padding-top: 0px;
+}
+>>>>>>> 4a5481b2934e0b0b099fc8a7add32e9bed1af638
