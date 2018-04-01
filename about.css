@@ -1,10 +1,10 @@
 .polaroid {
   position: relative;
   padding-top: 20px;
-  padding-left: 65px;
+  padding-left: 80px;
   width: 250px;
   height: 300px;
-
+  float: left;
 }
 
 .polaroid img {
