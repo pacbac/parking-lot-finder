@@ -97,7 +97,8 @@ function appendData(data) {
         icon,
         title: elem.name,
         position: elem.geometry.location,
-        rating
+        rating,
+        vicinity: elem.vicinity
       }))
     }
     parkingArr.sort(compareRatings)
@@ -115,6 +116,7 @@ function appendData(data) {
         $(".alloptions").append(`<div class="options" id="${i}">
           <button class="option-boxes">
             <p class="name">${elem.title}</p>
+            <p class="vicinity">Near or at: ${elem.vicinity}</p>
             <p class="rating" style="color: ${color}">${elem.rating}/5</p>
           </button>
         </div>`)
@@ -122,6 +124,7 @@ function appendData(data) {
         $(".alloptions").append(`<div class="options" id="${i}">
           <button class="option-boxes">
             <p class="name">${elem.title}</p>
+            <p class="vicinity">Near or at: ${elem.vicinity}</p>
           </button>
         </div>`)
       }
@@ -147,23 +150,6 @@ function compareRatings(a, b){
 // This example requires the Places library. Include the libraries=places
 // parameter when you first load the API. For example:
 // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
-// function calcRoute(start, end) {
-//   var selectedMode = "DRIVING";
-//   var request = {
-//       origin: start,
-//       destination: end,
-//       // Note that Javascript allows us to access the constant
-//       // using square brackets and a string value as its
-//       // "property."
-//       travelMode: google.maps.TravelMode[selectedMode]
-//   };
-//   directionsService.route(request, function(response, status) {
-//     if (status == 'OK') {
-//       directionsDisplay.setDirections(response);
-//     }
-//   });
-// }
 
 function renderDirections(result, modeColor) {
   var directionsRenderer = new google.maps.DirectionsRenderer;
