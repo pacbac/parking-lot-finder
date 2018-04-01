@@ -2,7 +2,7 @@
   position: relative;
   padding-top: 20px;
   padding-left: 80px;
-  width: 250px;
+  width: 17vw;
   height: 300px;
   float: left;
 }
@@ -57,6 +57,7 @@
 body{
   background-image: url(light.jpg);
   background-size: 1500px 1000px;
+  width: 100%;
 
 }
 
@@ -90,7 +91,7 @@ body{
 }
 
 .button {
-  font-family: Montserrat;
+  font-family: Kaushan Script;
   color: white;
   background-color: rgba(255, 255, 255, 0.25);
   border-color: var(--bg-color);
@@ -100,5 +101,35 @@ body{
 }
 
 .textbox {
-  padding-left: 50px;
+  width: 260px;
+  height: 20px;
+  font-family: Kaushan Script;
+  color: white;
+  background-color: rgba(255, 255, 255, 0.25);
+  border-color: var(--bg-color);
+  border-style: solid;
+  float: left;
+  padding: 5px 5px 5px 5px;
+  position: relative;
+}
+
+.allpictures {
+  height: 350px;
+}
+
+.text {
+
+}
+
+.titlebox {
+  margin:auto;
+  text-align: center;
+  font-family: Kaushan Script;
+  color: white;
+  width: 700px;
+}
+
+.title {
+  border-bottom-style: solid;
+  border-bottom-width: : 1.5px;
 }
