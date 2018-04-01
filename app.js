@@ -101,7 +101,7 @@ function appendData(data) {
         vicinity: elem.vicinity
       }))
     }
-    parkingArr.sort(compareRatings)
+    parkingArr.sort((a, b) => a.rating !== b.rating ? b.rating - a.rating: a.title.localeCompare(b.title))
     for(let i = 0; i < parkingArr.length; i++){
       let elem = parkingArr[i]
       if(elem.rating < 0) elem.rating = undefined
@@ -135,12 +135,6 @@ function appendData(data) {
   //debugger
   console.log('parkingArr:')
   console.log(parkingArr)
-}
-
-function compareRatings(a, b){
-  if(b.rating !== a.rating)
-    return b.rating - a.rating
-  return a.title.localeCompare(b.title)
 }
 
 // This example adds a search box to a map, using the Google Place Autocomplete
