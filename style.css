@@ -139,10 +139,13 @@ h1#header {
 }
 
 .option-boxes {
+<<<<<<< HEAD
   width: 200px;
   height: 100px;
   font-family: Montserrat;
   font-size: 16px;
+=======
+>>>>>>> a914781a8e8f0c0586d1e3b0b2363335e64c9716
   min-width: 200px;
   min-height: 75px;
   margin-left: 5px;
@@ -193,9 +196,16 @@ h1#header {
   align-items: center;
 }
 
-#name {
-  font-style: oblique;
-  font-weight: 200%;
-  font-size: 20px;
-  padding-top: 0px;
+.button {
+  font-family: Montserrat;
+  color: white;
+  background-color: rgba(255, 255, 255, 0.25);
+  border-color: var(--bg-color);
+  border-style: solid;
+  display: flex;
+  flex-wrap: wrap;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> a914781a8e8f0c0586d1e3b0b2363335e64c9716
