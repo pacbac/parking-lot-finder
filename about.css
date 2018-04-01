@@ -15,6 +15,7 @@
           box-shadow: 3px 3px 3px #777;
   height: 300px;
   width: 250px;
+
 }
 
 #c {
@@ -22,7 +23,7 @@
   bottom: 10px;
   font: 400 22px/1 'Kaushan Script', cursive;
   color: black;
-  padding-left: 90px;
+  padding-left: 30px;
   color: teal;
 }
 
@@ -31,7 +32,7 @@
   bottom: 10px;
   font: 400 22px/1 'Kaushan Script', cursive;
   color: black;
-  padding-left: 430px;
+  padding-left: 30px;
   color: teal;
 
 }
@@ -41,7 +42,7 @@
   bottom: 10px;
   font: 400 22px/1 'Kaushan Script', cursive;
   color: black;
-  padding-left: 770px;
+  padding-left: 30px;
   color: teal;
 }
 
@@ -50,7 +51,7 @@
   bottom: 10px;
   font: 400 22px/1 'Kaushan Script', cursive;
   color: black;
-  padding-left: 1105px;
+  padding-left: 30px;
   color: teal;
 }
 body{
@@ -86,4 +87,14 @@ body{
 
 .row{
   margin: auto;
+}
+
+.button {
+  font-family: Montserrat;
+  color: white;
+  background-color: rgba(255, 255, 255, 0.25);
+  border-color: var(--bg-color);
+  border-style: solid;
+  display: flex;
+  flex-wrap: wrap;
 }
