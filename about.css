@@ -1,10 +1,10 @@
 .polaroid {
   position: relative;
   padding-top: 20px;
-  padding-left: 65px;
+  padding-left: 80px;
   width: 250px;
   height: 300px;
-
+  float: left;
 }
 
 .polaroid img {
@@ -15,6 +15,7 @@
           box-shadow: 3px 3px 3px #777;
   height: 300px;
   width: 250px;
+
 }
 
 #c {
@@ -22,7 +23,7 @@
   bottom: 10px;
   font: 400 22px/1 'Kaushan Script', cursive;
   color: black;
-  padding-left: 90px;
+  padding-left: 30px;
   color: teal;
 }
 
@@ -31,7 +32,7 @@
   bottom: 10px;
   font: 400 22px/1 'Kaushan Script', cursive;
   color: black;
-  padding-left: 430px;
+  padding-left: 30px;
   color: teal;
 
 }
@@ -41,7 +42,7 @@
   bottom: 10px;
   font: 400 22px/1 'Kaushan Script', cursive;
   color: black;
-  padding-left: 770px;
+  padding-left: 30px;
   color: teal;
 }
 
@@ -50,7 +51,7 @@
   bottom: 10px;
   font: 400 22px/1 'Kaushan Script', cursive;
   color: black;
-  padding-left: 1105px;
+  padding-left: 30px;
   color: teal;
 }
 body{
