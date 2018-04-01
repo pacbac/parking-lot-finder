@@ -97,3 +97,7 @@ body{
   display: flex;
   flex-wrap: wrap;
 }
+
+.textbox {
+  padding-left: 50px;
+}
