@@ -6,7 +6,13 @@ var directionsDisplay;
 var ucla;
 var infoWindow;
 var map;
-let markerIcon = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+var currentLatitude;
+var currentLongitude;
+var currentLocation
+if (!markerIcon) var markerIcon = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+if(!directionsArr) var directionsArr = []
+var endloc
+
 
 $(document).ready(function(){
   $("#pac-input").keypress(e => {
@@ -18,25 +24,32 @@ $(document).ready(function(){
   $(document).on("mousedown", ".pac-item", () => retrieveJSONData())
 
   $(document).on("mousedown", ".options", function(){
-    console.log(markers)
+    while(directionsArr.length > 0)
+      directionsArr.shift().setMap(null)
     let index = Number.parseInt(this.id)
     if(index >= parkingArr.length) return console.log('Index outside of array')
-    if(markers.length == 2){
-      let removeMarker = markers.pop()
-      console.log('removeMarker', removeMarker)
-      removeMarker.setMap(null)
-    }
+    if(markers.length == 3)
+      markers.pop().setMap(null)
     markers.push(parkingArr[index])
-    if(map)
+    if(map) {
       parkingArr[index].setMap(map)
-    console.log(parkingArr[index].position.lat(), parkingArr[index].position.lng())
-    console.log(parkingArr)
-    console.log(markers)
+      let lat = parkingArr[index].position.lat()
+      let long = parkingArr[index].position.lng()
+      let parkingSpot = new google.maps.LatLng(lat, long)
+      requestDirections(currentLocation, parkingSpot, "DRIVING")
+      console.log(markers)
+      //markers.pop().setMap(null)
+      requestDirections(parkingSpot, endloc, "WALKING")
+    }
   })
 })
 
 function retrieveJSONData() {
   parkingArr = []
+  while(markers.length > 1)
+    markers.pop().setMap(null)
+  while(directionsArr.length > 0)
+    directionsArr.shift().setMap(null)
   $(".alloptions").css('display', 'flex')
   $.ajax({
     url: `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent($("#pac-input").val())}&key=${key}`,
@@ -71,6 +84,26 @@ function appendData(data) {
     console.log(data)
     for(let i = 0; i < data.results.length; i++){
       let elem = data.results[i]
+      rating = elem.rating || -1
+      var icon = {
+        url: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(25, 25)
+      }
+      parkingArr.push(new google.maps.Marker({
+        map: null,
+        icon,
+        title: elem.name,
+        position: elem.geometry.location,
+        rating
+      }))
+    }
+    parkingArr.sort(compareRatings)
+    for(let i = 0; i < parkingArr.length; i++){
+      let elem = parkingArr[i]
+      if(elem.rating < 0) elem.rating = undefined
       if(elem.rating){
         let color;
         if(elem.rating >= 4)
@@ -81,32 +114,17 @@ function appendData(data) {
           color = 'black'
         $(".alloptions").append(`<div class="options" id="${i}">
           <button class="option-boxes">
-            <p class="name">${elem.name}</p>
+            <p class="name">${elem.title}</p>
             <p class="rating" style="color: ${color}">${elem.rating}/5</p>
           </button>
         </div>`)
-      } else if(elem.name) {
-        $(".alloptions").append(`<div class="options">
+      } else if(elem.title) {
+        $(".alloptions").append(`<div class="options" id="${i}">
           <button class="option-boxes">
-            <p class="name">${elem.name}</p>
+            <p class="name">${elem.title}</p>
           </button>
         </div>`)
       }
-
-      var icon = {
-        url: elem.icon,
-        size: new google.maps.Size(71, 71),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(17, 34),
-        scaledSize: new google.maps.Size(25, 25)
-      }
-
-      parkingArr.push(new google.maps.Marker({
-        map: null,
-        icon: markerIcon,
-        title: elem.name,
-        position: elem.geometry.location
-      }))
     }
   } else if(data.status === "ZERO_RESULTS"){
     $(".alloptions").text("No available parking lots at this time.")
@@ -114,6 +132,12 @@ function appendData(data) {
   //debugger
   console.log('parkingArr:')
   console.log(parkingArr)
+}
+
+function compareRatings(a, b){
+  if(b.rating !== a.rating)
+    return b.rating - a.rating
+  return a.title.localeCompare(b.title)
 }
 
 // This example adds a search box to a map, using the Google Place Autocomplete
@@ -124,21 +148,53 @@ function appendData(data) {
 // parameter when you first load the API. For example:
 // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
-function calcRoute(start, end) {
-  var selectedMode = "DRIVING";
-  var request = {
-      origin: start,
-      destination: end,
-      // Note that Javascript allows us to access the constant
-      // using square brackets and a string value as its
-      // "property."
-      travelMode: google.maps.TravelMode[selectedMode]
-  };
-  directionsService.route(request, function(response, status) {
-    if (status == 'OK') {
-      directionsDisplay.setDirections(response);
-    }
-  });
+// function calcRoute(start, end) {
+//   var selectedMode = "DRIVING";
+//   var request = {
+//       origin: start,
+//       destination: end,
+//       // Note that Javascript allows us to access the constant
+//       // using square brackets and a string value as its
+//       // "property."
+//       travelMode: google.maps.TravelMode[selectedMode]
+//   };
+//   directionsService.route(request, function(response, status) {
+//     if (status == 'OK') {
+//       directionsDisplay.setDirections(response);
+//     }
+//   });
+// }
+
+function renderDirections(result, modeColor) {
+  var directionsRenderer = new google.maps.DirectionsRenderer;
+  directionsRenderer.setOptions({
+    polylineOptions: {
+      strokeColor: modeColor
+    },
+    suppressMarkers: true
+  })
+  directionsRenderer.setMap(map);
+  directionsRenderer.setDirections(result);
+  directionsArr.push(directionsRenderer)
+}
+
+function requestDirections(start, end, mode) {
+  var modeVar
+  var modeColor
+  if(mode === "DRIVING"){
+    modeVar = google.maps.DirectionsTravelMode.DRIVING
+    modeColor = 'blue'
+  }
+  else if(mode === "WALKING") {
+    modeVar = google.maps.DirectionsTravelMode.WALKING
+    modeColor = 'red'
+  }
+  else return console.log('Invalid mode of transportation.')
+  directionsService.route({
+	origin: start,
+	destination: end,
+	travelMode: modeVar
+}, result => renderDirections(result, modeColor));
 }
 
 function initAutocomplete(currentloc) {
@@ -181,6 +237,21 @@ function initAutocomplete(currentloc) {
     });
     markers = [];
 
+    var startIcon = {
+      url: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+      size: new google.maps.Size(71, 71),
+      origin: new google.maps.Point(0, 0),
+      anchor: new google.maps.Point(17, 34),
+      scaledSize: new google.maps.Size(25, 25)
+    };
+
+    markers.push(new google.maps.Marker({
+      map: map,
+      icon: startIcon,
+      title: 'Starting location',
+      position: currentLocation
+    }));
+
     // For each place, get the icon, name and location.
     var bounds = new google.maps.LatLngBounds();
     places.forEach(function(place) {
@@ -188,6 +259,7 @@ function initAutocomplete(currentloc) {
         console.log("Returned place contains no geometry");
         return;
       }
+
       var icon = {
         url: place.icon,
         size: new google.maps.Size(71, 71),
@@ -199,7 +271,7 @@ function initAutocomplete(currentloc) {
       // Create a marker for each place.
       markers.push(new google.maps.Marker({
         map: map,
-        icon: icon,
+        icon,
         title: place.name,
         position: place.geometry.location
       }));
@@ -215,34 +287,28 @@ function initAutocomplete(currentloc) {
 
 	var endlat = places[0].geometry.location.lat();
 	var endlng = places[0].geometry.location.lng();
-	var endloc = new google.maps.LatLng(endlat, endlng);
-	calcRoute(currentloc, endloc);
-
-
+	endloc = new google.maps.LatLng(endlat, endlng);
+	requestDirections(currentloc, endloc, "DRIVING");
   });
 }
 
 // Try HTML5 geolocation.
 function locate(){
 	if ("geolocation" in navigator){
-		var currentLatitude;
-		var currentLongitude;
-		var currentLocation
 		navigator.geolocation.getCurrentPosition(function(position){
-      alert('b')
 			currentLatitude = position.coords.latitude;
 			currentLongitude = position.coords.longitude;
 			//var infoWindowHTML = "Latitude: " + currentLatitude + "<br>Longitude: " + currentLongitude;
 			//infoWindow = new google.maps.InfoWindow({map: map, content: infoWindowHTML});
-			currentLocation = { lat: currentLatitude, lng: currentLongitude };
+
+      currentLocation = { lat: currentLatitude, lng: currentLongitude };
+
 			initAutocomplete(currentLocation);
 
 			//alert(currentcoord[0]);
 			//alert(currentLatitude);
 			//infoWindow.setPosition(currentLocation);
-		}, function(err) {
-      alert("error", JSON.stringify(err))
-    });
+		}, err => console.log("error", JSON.stringify(err)));
 
 	}
 	//alert(currentLatitude);

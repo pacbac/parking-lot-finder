@@ -74,7 +74,7 @@ h1#header {
 #map {
   width: 50%;
   height: 25vw;
-  margin: auto;
+  margin: auto auto 10px auto;
   border-style: solid;
   border-width: 7px;
   border-color: var(--bg-color);
@@ -139,16 +139,12 @@ h1#header {
 }
 
 .option-boxes {
-<<<<<<< HEAD
   width: 200px;
   height: 100px;
   font-family: Montserrat;
   font-size: 16px;
-=======
->>>>>>> a914781a8e8f0c0586d1e3b0b2363335e64c9716
   min-width: 200px;
   min-height: 75px;
-  margin-left: 5px;
   margin-bottom: 5px;
   background-color: white;
   border-radius: 3px;
@@ -162,10 +158,9 @@ h1#header {
   vertical-align: middle;
   display: flex;
   align-items: center;
-  margin-left: 10px;
 }
 
-.options button {
+button {
   cursor: pointer;
 }
 
@@ -192,7 +187,7 @@ h1#header {
   color: white;
   font-family: Lato;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 }
 
@@ -205,7 +200,21 @@ h1#header {
   display: flex;
   flex-wrap: wrap;
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> a914781a8e8f0c0586d1e3b0b2363335e64c9716
+.sort-btns {
+  width: 50%;
+  margin: auto;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#sort-dist, #sort-rating {
+  width: 120px;
+  height: 40px;
+  color: gray;
+  border-style: solid;
+  border-color: gray;
+  border-width: 2px;
+  border-radius: 2px;
+  background-color: #f0f0f0;
+}
