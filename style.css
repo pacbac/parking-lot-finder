@@ -139,9 +139,17 @@ h1#header {
 }
 
 .option-boxes {
+<<<<<<< HEAD
+  width: 200px;
+  height: 100px;
+  font-family: Montserrat;
+  font-size: 16px;
+=======
+>>>>>>> a914781a8e8f0c0586d1e3b0b2363335e64c9716
   min-width: 200px;
   min-height: 75px;
   margin-left: 5px;
+  margin-bottom: 5px;
   background-color: white;
   border-radius: 3px;
   border-width: 0;
@@ -150,7 +158,6 @@ h1#header {
 .options {
   outline: none;
   width: 200px;
-  height: 120px;
   line-height: 120px;
   vertical-align: middle;
   display: flex;
@@ -173,7 +180,7 @@ h1#header {
 
 .alloptions {
   display: none;
-  max-width: 50%;
+  max-width: 70%;
   margin: auto;
   text-align: center;
   padding: 10px;
@@ -184,7 +191,6 @@ h1#header {
   border-radius: 2px;
   color: white;
   font-family: Lato;
-  display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
@@ -199,4 +205,7 @@ h1#header {
   display: flex;
   flex-wrap: wrap;
 }
+<<<<<<< HEAD
+=======
 
+>>>>>>> a914781a8e8f0c0586d1e3b0b2363335e64c9716
