@@ -8,31 +8,65 @@
 
 var directionsService;
 var directionsDisplay;
-var ucla;
 var infoWindow;
 var map;
+var uclamed;
 
+function renderDirections(result) {
+  var directionsRenderer = new google.maps.DirectionsRenderer;
+  directionsRenderer.setMap(map);
+  directionsRenderer.setDirections(result);
+}
+
+function requestDirections(start, end) {
+  directionsService.route({
+	origin: start,
+	destination: end,
+	travelMode: google.maps.DirectionsTravelMode.DRIVING
+  }, function(result) {
+	renderDirections(result);
+  });
+}
+
+/*
 function calcRoute(start, end) {
-  var selectedMode = "DRIVING";
-  var request = {
+  var selectedMode1 = "DRIVING";
+  var request1 = {
       origin: start,
       destination: end,
       // Note that Javascript allows us to access the constant
       // using square brackets and a string value as its
       // "property."
-      travelMode: google.maps.TravelMode[selectedMode]
+      travelMode: google.maps.TravelMode[selectedMode1]
   };
-  directionsService.route(request, function(response, status) {
+  directionsService.route(request1, function(response1, status) {
     if (status == 'OK') {
-      directionsDisplay.setDirections(response);
+      directionsDisplay.setDirections(response1);
+    }
+  });
+  
+  var selectedMode2 = "WALKING";
+  var request2 = {
+      origin: uclamed,
+      destination: end,
+      // Note that Javascript allows us to access the constant
+      // using square brackets and a string value as its
+      // "property."
+      travelMode: google.maps.TravelMode[selectedMode2]
+  };
+  directionsService.route(request2, function(response2, status) {
+    if (status == 'OK') {
+      directionsDisplay.setDirections(response2);
     }
   });
 }
+*/
 
 function initAutocomplete(currentloc) {
   directionsService = new google.maps.DirectionsService();
   directionsDisplay = new google.maps.DirectionsRenderer();
   //ucla = new google.maps.LatLng(34.0689, -118.4452);
+  uclamed = new google.maps.LatLng(34.0657, -118.4463);
   //var currentcoord = locate();
   //alert(currentcoord[0]);
   var mapOptions = {
@@ -104,8 +138,11 @@ function initAutocomplete(currentloc) {
 	var endlat = places[0].geometry.location.lat();
 	var endlng = places[0].geometry.location.lng();
 	var endloc = new google.maps.LatLng(endlat, endlng);
-	calcRoute(currentloc, endloc);
+	//calcRoute(currentloc, uclamed);
+	//calcRoute(uclamed, endloc);
 	
+	requestDirections(currentloc, uclamed);
+	requestDirections(uclamed, endloc);
 	
   });
 }
